@@ -1,0 +1,21 @@
+[Unit]
+Description={{ minter_service_name }} container
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+ExecStartPre=-/usr/bin/docker rm {{ minter_service_name }}
+ExecStart=/usr/bin/docker run --rm \
+    -v {{ minter_dir }}:/minter \
+    --net=bridge \
+    -p {{ minter_api_port }}:8841 \
+    -p {{ minter_node_port }}:26656 \
+    --name {{ minter_service_name }} \
+    {{ minter_docker_image_name }}:{{ minter_node_version }} node
+
+ExecStop=/usr/bin/docker stop -t 10 {{ minter_service_name }}
+ExecReload=/usr/bin/docker kill -s HUP {{ minter_service_name }}
+
+[Install]
+WantedBy=multi-user.target

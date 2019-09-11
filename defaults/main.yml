@@ -1,0 +1,15 @@
+---
+flush_all: false
+
+minter_docker_image: dmi7ry/minter-node
+minter_docker_image_version: 1.0.4
+
+minter_service_name: minter-node
+minter_dir: /minter
+minter_validator_addr_book_strict: true
+
+minter_node_port: 26656
+minter_api_port: 8841
+
+minter_user_gid: 1000
+minter_user_group: 1000

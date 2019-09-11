@@ -1,0 +1,29 @@
+---
+- name: copy {{ minter_service_name }} service config
+  template:
+    src: minter.service.j2
+    dest: "/etc/systemd/system/{{ minter_service_name }}.service"
+  register: service_file
+
+- name: pre-pull docker image
+  docker_image:
+    name: "{{ minter_docker_image_name }}:{{ minter_node_version }}"
+    state: present
+
+- name: enable systemctl service
+  systemd:
+    name: "{{ minter_service_name }}"
+    enabled: yes
+    state: "{{ service_file.changed | ternary('restarted','started') }}"
+    daemon_reload: yes
+
+# - name: enable {{ minter_service_name }} service
+#   systemd:
+#     name: "{{ minter_service_name }}"
+#     enabled: yes
+#     state: started
+#     daemon_reload: yes
+
+- name: wait {{ minter_service_name }} to start
+  wait_for:
+    port: "{{ minter_api_port }}"

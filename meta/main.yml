@@ -1,0 +1,7 @@
+---
+galaxy_info:
+  author: Dmitry Evdokimov @ https://github.com/dmitry-ee/ansible-minter-role
+  description: "Minter Role"
+  company: none
+
+dependencies: []

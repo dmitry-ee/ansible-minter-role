@@ -1,0 +1,26 @@
+---
+- name: disable {{ minter_service_name }} service
+  ignore_errors: yes
+  systemd:
+    name: "{{minter_service_name}}"
+    enabled: no
+    state: stopped
+    daemon_reload: yes
+
+- name: remove {{ minter_service_name }} service
+  file:
+    path: "/etc/systemd/system/{{ minter_service_name }}.service"
+    state: absent
+
+- name: Delete docker image
+  docker_image:
+    name: "{{ minter_docker_image_name }}:{{ minter_node_version }}"
+    state: absent
+
+- name: delete {{ minter_service_name }} config directories
+  file:
+    path: "{{ item }}"
+    state: absent
+  when: remove_all_directories
+  with_items:
+    - "{{ minter_dir }}"
