@@ -9,6 +9,7 @@
   docker_image:
     name: "{{ minter_docker_image }}:{{ minter_docker_image_version }}"
     state: present
+    source: pull
 
 - name: enable systemctl service
   systemd:
