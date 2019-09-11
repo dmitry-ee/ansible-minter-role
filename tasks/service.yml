@@ -7,7 +7,7 @@
 
 - name: pre-pull docker image
   docker_image:
-    name: "{{ minter_docker_image_name }}:{{ minter_node_version }}"
+    name: "{{ minter_docker_image }}:{{ minter_node_version }}"
     state: present
 
 - name: enable systemctl service
