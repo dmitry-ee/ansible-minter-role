@@ -1,1 +1,1 @@
-# ansible-minter-role
+# Ansible Role for Minter Node
