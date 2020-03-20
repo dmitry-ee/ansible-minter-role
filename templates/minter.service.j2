@@ -12,7 +12,7 @@ ExecStart=/usr/bin/docker run --rm \
     -p {{ minter_api_port }}:8841 \
     -p {{ minter_node_port }}:26656 \
     --name {{ minter_service_name }} \
-    {{ minter_docker_image }}:{{ minter_docker_image_version }} node
+    {{ minter_docker_image }}:{{ minter_docker_image_version }}
 
 ExecStop=/usr/bin/docker stop -t 10 {{ minter_service_name }}
 ExecReload=/usr/bin/docker kill -s HUP {{ minter_service_name }}
